@@ -15,6 +15,9 @@ export default {
   components: {
     AppHeader,
     AppFooter
+  },
+  mounted() {
+    this.$store.dispatch("user/checkLoggedInStatus")
   }
 }
 </script>

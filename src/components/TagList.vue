@@ -4,28 +4,30 @@
             <p>Popular Tags</p>
 
             <div class="tag-list">
-				<a href="" @click.prevent="tagClick(tag)"  v-for="tag in tags" :key="tag" class="tag-pill tag-default">{{tag}}</a>
+                <a href="" @click.prevent="tagClick(tag)" v-for="tag in tags" :key="tag" class="tag-pill tag-default">{{tag}}</a>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-
-export default {
+  export default {
     name: "TagList",
-    computed: mapGetters(["tags"]),
+    props: {
+      tags: {
+        type: Array,
+        default() {
+          return []
+        },
+        required: true
+      }
+    },
     methods: {
-      ...mapActions(["fetchTags"]),
       tagClick(tag) {
         console.log(tag)
       }
     },
-    mounted() {
-        this.$store.dispatch("fetchTags");
-    }
-};
+  };
 </script>
 
 <style>

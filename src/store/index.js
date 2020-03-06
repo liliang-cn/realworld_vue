@@ -1,33 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createLogger from 'vuex/dist/logger'
+
+import tag from './tag'
+import user from "./user"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    tags: []
-  },
-  mutations: {
-    save (state, payload) {
-      Object.assign(state, payload)
-    }
-  },
-  actions: {
-    fetchTags({ commit }) {
-      fetch("https://conduit.productionready.io/api/tags")
-        .then((response) => {
-          return response.json()
-        })
-        .then(data => {
-          commit("save", { tags: data.tags })
-        })
-    }
-  },
+  plugins: [createLogger({
+    collapsed: false
+  })],
   modules: {
-  },
-  getters: {
-    tags: state => {
-      return state.tags
-    },
+    tag,
+    user
   },
 })

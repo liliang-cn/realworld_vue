@@ -1,6 +1,6 @@
 <template>
     <div class="home-page">
-        <HomeBanner />
+        <HomeBanner/>
 
         <div class="container page">
             <div class="row">
@@ -19,7 +19,7 @@
                     <div class="article-preview">
                         <div class="article-meta">
                             <a href="profile.html">
-                                <img src="http://i.imgur.com/Qr71crq.jpg" />
+                                <img src="http://i.imgur.com/Qr71crq.jpg"/>
                             </a>
                             <div class="info">
                                 <a href class="author">Eric Simons</a>
@@ -39,7 +39,7 @@
                     <div class="article-preview">
                         <div class="article-meta">
                             <a href="profile.html">
-                                <img src="http://i.imgur.com/N4VcUeJ.jpg" />
+                                <img src="http://i.imgur.com/N4VcUeJ.jpg"/>
                             </a>
                             <div class="info">
                                 <a href class="author">Albert Pai</a>
@@ -57,23 +57,38 @@
                     </div>
                 </div>
 
-                <TagList />
+                <TagList :tags="tags"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import HomeBanner from "@/components/HomeBanner";
-import TagList from '@/components/TagList';
+  import HomeBanner from "@/components/HomeBanner";
+  import TagList from '@/components/TagList';
+  import {mapActions, mapGetters} from "vuex"
 
-export default {
+  export default {
     name: "Home",
     components: {
-        HomeBanner,
-        TagList
+      HomeBanner,
+      TagList
+    },
+    computed: {
+      ...mapGetters({
+        tags: "tag/getTags"
+      })
+    },
+    methods: {
+      ...mapActions(["tag/fetchTags"]),
+      tagClick(tag) {
+        console.log(tag)
+      }
+    },
+    mounted() {
+      this.$store.dispatch("tag/fetchTags");
     }
-};
+  };
 </script>
 
 
