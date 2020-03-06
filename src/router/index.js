@@ -3,10 +3,15 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
+import Article from '../views/Article.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/article/:slug',
+    component: Article
+  },
   {
     path: '/',
     name: 'Home',

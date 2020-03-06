@@ -35,7 +35,7 @@
     methods: {
       login(user) {
         if (!this.userInfo.loading) {
-          this.$store.dispatch("user/login", user)
+          this.$store.dispatch("user/login", { user })
         }
       }
     }

@@ -1,4 +1,4 @@
-import { postRequest } from '../actions'
+import { postRequest, getRequest } from '../actions'
 
 import router from '../router'
 
@@ -17,9 +17,9 @@ const user = {
     }
   },
   actions: {
-    register({ commit }, payload) {
+    register({ commit }, { user }) {
       commit("save", { loading: true })
-      postRequest("/api/users", {user: payload}).then(res => {
+      postRequest("/api/users", { user }).then(res => {
         if (res.error) {
           commit("save", { user: {}, error: true, errors: res.data.errors, loading: false })
         } else {
@@ -29,9 +29,9 @@ const user = {
         }
       })
     },
-    login({ commit }, payload) {
+    login({ commit }, { user }) {
       commit("save", { loading: true })
-      postRequest("/api/users/login", {user: payload}).then(res => {
+      postRequest("/api/users/login", { user }).then(res => {
         if (res.error) {
           commit("save", { user: {}, error: true, errors: res.data.errors, loading: false })
         } else {
@@ -41,10 +41,21 @@ const user = {
         }
       })
     },
-    checkLoggedInStatus({ commit }) {
+    fetchUserInfo({ commit }) {
+      getRequest("/api/user").then(res => {
+        if (res.error) {
+          commit("save", { user: {}, error: true, errors: res.data.errors, loading: false })
+        } else {
+          commit("save", { user: res.data.user, error: false, errors: {}, loading: false, loggedIn: true })
+          sessionStorage.setItem("real_world_token", res.data.user.token)
+        }
+      })
+    },
+    checkLoggedInStatus({ commit, dispatch }) {
       const token = sessionStorage.getItem("real_world_token");
 
       if (token) {
+        dispatch("fetchUserInfo")
         commit("save", { loggedIn: true })
       }
     },

@@ -35,7 +35,7 @@
     methods: {
       register(user) {
         if (!this.userInfo.loading) {
-          this.$store.dispatch("user/register", user)
+          this.$store.dispatch("user/register", { user })
         }
       }
     }
