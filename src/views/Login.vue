@@ -7,7 +7,7 @@
                     <p class="text-xs-center">
                         <router-link to="/register">Need an account?</router-link>
                     </p>
-                    <AuthForm @handleSubmit="login" :userInfo="userInfo"/>
+                    <AuthForm @handleSubmit="login" :userInfo="userInfo" />
                 </div>
             </div>
         </div>
@@ -15,33 +15,30 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import AuthForm from "../components/form/AuthForm"
-  export default {
+import { mapGetters } from "vuex";
+import AuthForm from "../components/form/AuthForm";
+export default {
     name: "Login",
     components: {
-      AuthForm
+        AuthForm
     },
     data() {
-      return {
-
-      }
+        return {};
     },
     computed: {
-      ...mapGetters({
-        userInfo: "user/getUser"
-      })
+        ...mapGetters({
+            userInfo: "user/getUser"
+        })
     },
     methods: {
-      login(user) {
-        if (!this.userInfo.loading) {
-          this.$store.dispatch("user/login", { user })
+        login(user) {
+            if (!this.userInfo.loading) {
+                this.$store.dispatch("user/login", { user });
+            }
         }
-      }
     }
-  }
+};
 </script>
 
 <style scoped>
-
 </style>

@@ -1,17 +1,6 @@
 <template>
     <div class="article-preview">
-        <div class="article-meta">
-            <a href="/">
-                <img :src="article.author.image" alt="avatar"/>
-            </a>
-            <div class="info">
-                <a href class="author">{{ article.author.username }}</a>
-                <span class="date">{{ updateTime }}</span>
-            </div>
-            <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart"></i> {{article.favoritesCount}}
-            </button>
-        </div>
+        <MetaInfo :article="article" />
         <router-link :to="articleUrl" class="preview-link">
             <h1>{{ article.title }}</h1>
             <p>{{ article.description }}</p>
@@ -21,7 +10,8 @@
 </template>
 
 <script>
-  import moment from 'moment'
+  import MetaInfo from './MetaInfo'
+
   export default {
     name: "ArticlePreview",
     props: {
@@ -33,13 +23,13 @@
       }
     },
     computed: {
-      updateTime() {
-        return moment(this.article.updatedAt).format("lll")
-      },
       articleUrl() {
         return `/article/${this.article.slug}`
       }
     },
+    components: {
+      MetaInfo
+    }
   }
 </script>
 
